@@ -3,13 +3,8 @@
 
 
 
-All videos, exercises, and coded solutions can be found at..
-
-https://JavaScript30.com
+All videos, exercises, and coded solutions can be found on Wes Bos's [JavaScript30 Website](https://JavaScript30.com)
 
 
 
-A YouTube playlist for the challenge is here..
-
-https://www.youtube.com/playlist?list=PLu8EoSxDXHP6CGK4YVJhL_VWetA865GOH
-
+Here is the [YouTube playlist](https://www.youtube.com/playlist?list=PLu8EoSxDXHP6CGK4YVJhL_VWetA865GOH) that accompanies the challenge
