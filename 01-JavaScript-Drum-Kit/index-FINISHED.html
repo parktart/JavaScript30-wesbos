@@ -60,6 +60,42 @@
 
 <script>
 
+  const keys = document.querySelectorAll('.key');
+  const audios = document.querySelectorAll('audio');
+
+  document.addEventListener('keydown', keyDown);
+
+  function keyDown(e) {
+    const KeyCode = e.keyCode;
+    playSound(KeyCode);
+    addPlaying(KeyCode);
+  }
+  
+  function playSound(KeyCode) {
+    for (const audio of audios) {
+      if (KeyCode == audio.getAttribute('data-key')) {
+        audio.currentTime = 0;
+        audio.play();
+      }
+    }
+  }
+
+  function addPlaying(KeyCode) {
+    for (const key of keys) {
+      if (KeyCode == key.getAttribute('data-key')) {
+        key.classList.add('playing');
+      }
+    }
+  }
+  
+  for (const key of keys) {
+    key.addEventListener('transitionend', removePlaying);
+  }
+
+  function removePlaying(e) {
+    this.classList.remove('playing');
+  }
+
 </script>
 
 
