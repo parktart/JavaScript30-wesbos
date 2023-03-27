@@ -50,7 +50,6 @@
       background: black;
       position: absolute;
       top: 50%;
-      transform-origin: 100%;
     }
 
   </style>
@@ -67,47 +66,6 @@
 
   <script>
 
-    const now = new Date();
-    const hours = now.getHours();
-    if (hours > 12) hours -= 12;
-    const minutes = now.getMinutes();
-    const seconds = now.getSeconds();
-
-    const hourHand = document.querySelector('.hour-hand');
-    const minHand = document.querySelector('.min-hand');
-    const secHand = document.querySelector('.second-hand');
-
-    const hourInitDeg = hours / 12 * 360 + 90;
-    const hourFinDeg = hourInitDeg + 360;
-
-    const minInitDeg = minutes / 60 * 360 + 90;
-    const minFinDeg = minInitDeg + 360;
-
-    const secInitDeg = seconds / 60 * 360 + 90;
-    const secFinDeg = secInitDeg + 360;
-
-    const keyframesHour = `@keyframes rotate-hour {
-      from {transform: rotate(${hourInitDeg}deg);}
-      to {transform: rotate(${hourFinDeg}deg);}
-    }`;
-
-    const keyframesMin = `@keyframes rotate-min {
-      from {transform: rotate(${minInitDeg}deg);}
-      to {transform: rotate(${minFinDeg}deg);}
-    }`;
-
-    const keyframesSec = `@keyframes rotate-sec {
-      from {transform: rotate(${secInitDeg}deg);}
-      to {transform: rotate(${secFinDeg}deg);}
-    }`;
-
-    const style = document.createElement('style');
-    style.textContent = keyframesHour + keyframesMin + keyframesSec;
-    document.head.appendChild(style);
-
-    hourHand.style.animation = 'rotate-hour 43200s linear infinite';
-    minHand.style.animation = 'rotate-min 3600s linear infinite';
-    secHand.style.animation = 'rotate-sec 60s linear infinite';
 
   </script>
 </body>
