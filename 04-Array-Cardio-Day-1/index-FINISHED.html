@@ -84,10 +84,7 @@
     // 2. Give us an array of the inventors first and last names
     console.log('-----');
 
-    const firstAndLasts = [];
-    inventors.map(inventor => {
-      firstAndLasts.push({ first: `${inventor.first}`, last: `${inventor.last}`});
-    });
+    const firstAndLasts = inventors.map((inventor) => inventor.first + ' ' + inventor.last);
     console.log('All first and last names:');
     console.dir(firstAndLasts)
 
@@ -96,11 +93,7 @@
     // 3. Sort the inventors by birthdate, oldest to youngest
     console.log('-----');
 
-    inventors.sort((a,b) => {
-      if (a.year < b.year) return -1;
-      if (a.year > b.year) return 1;
-      else return 0; 
-    });
+    inventors.sort((a,b) => a.year < b.year ? -1 : 1);
     console.log('Sorted by birthdate:');
     inventors.forEach((inventor) => console.log(inventor.year));
     
@@ -109,8 +102,8 @@
     // 4. How many years did all the inventors live all together?
     console.log('-----');
 
-    const totalYears = inventors.reduce((a, b) => {
-      return a + (b.passed - b.year);
+    const totalYears = inventors.reduce((accumulator, inventor) => {
+      return accumulator + (inventor.passed - inventor.year);
     }, 0);
     console.log(`Total years lived is:`);
     console.log(totalYears);
@@ -132,9 +125,8 @@
     // https://en.wikipedia.org/wiki/Category:Boulevards_in_Paris
     console.log('-----');
 
-    const anchors = document.querySelectorAll('a');
-    const streets = [];
-    anchors.forEach((a) => streets.push(a.getAttribute('title')));
+    const anchors = Array.from(document.querySelectorAll('a'));
+    const streets = anchors.map(anchor => anchor.getAttribute('title'));
     const withDE = streets.filter((street) => street.includes('de'));
     console.log('The Boulevards that contain "de" are:')
     console.dir(withDE);
@@ -154,41 +146,13 @@
     const data = ['car', 'car', 'truck', 'truck', 'bike', 'walk', 'car', 'van', 'bike', 'walk', 'car', 'van', 'car', 'truck' ];
     
 
-    const types = removeDuplicates(data);
-
-    function removeDuplicates(arr) {
-      let uniqueArr = [];
-      for (const elem of arr) {
-        if (!uniqueArr.includes(elem)) {
-          uniqueArr.push(elem);
-        }
+    const finalAnswer = data.reduce((obj, item) => {
+      if(!obj[item]) {
+        obj[item] = 0;
       }
-      return uniqueArr;
-    }
-
-    const instances = countInstances(types, data);
-
-    function countInstances(types, data) {
-      const instances = new Array(types.length).fill(0);
-      for (let i = 0; i < types.length; i++) {
-        for (let j = 0; j < data.length; j++) {
-          if (data[j] === types[i]) {
-            instances[i]++;
-          }
-        }
-      }
-      return instances;
-    }
-    
-    const finalAnswer = match(types, instances);
-
-    function match(types, instances) {
-      const matched = [];
-      for (let i = 0; i < types.length; i++) {
-        matched.push({ [types[i]]: instances[i] });
-      }
-      return matched;
-    }
+      obj[item]++;
+      return obj;
+    }, {});
     
     console.log('Sum of each instance for data:')
     console.dir(finalAnswer);
