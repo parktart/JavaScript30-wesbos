@@ -16,7 +16,41 @@
     </ul>
   </form>
 <script>
-const endpoint = 'https://gist.githubusercontent.com/Miserlou/c5cd8364bf9b2420bb29/raw/2bf258763cdddd704f8ffd3ea9a3e81d25e2c6f6/cities.json';
+  const endpoint = 'https://gist.githubusercontent.com/Miserlou/c5cd8364bf9b2420bb29/raw/2bf258763cdddd704f8ffd3ea9a3e81d25e2c6f6/cities.json';
+
+  const input = document.querySelector('input');
+  const ul = document.querySelector('ul');
+
+  input.addEventListener('keydown', fetchData);
+
+  function fetchData() {
+    fetch(endpoint)
+    .then(response => response.json())
+    .then(data => findMatches(data))
+    .catch(error => console.error(error));
+  }
+  
+  function findMatches(data) {
+    const inputValue = input.value.toLowerCase();
+    const matches = data.filter((elem) => {
+      const city = elem.city.toLowerCase();
+      const state = elem.state.toLowerCase();
+      return (city.includes(inputValue) || state.includes(inputValue))
+        ? true
+        : false;
+    });
+    displayMatches(matches);    
+  }
+
+  function displayMatches(matches) {
+    ul.innerHTML = '';
+    for (let i = 0; i < matches.length; i++) {
+      const li = document.createElement('li');
+      li.innerHTML = `<span>${matches[i].city}, ${matches[i].state}</span><span class="population">${matches[i].population}</span>`;
+      ul.appendChild(li);
+    }
+  }
+
 
 </script>
 </body>
