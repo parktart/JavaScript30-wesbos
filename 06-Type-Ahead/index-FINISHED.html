@@ -42,7 +42,7 @@
       return;
     }
     const matches = getMatches(inputValue);
-    displayMatches(matches);
+    displayMatches(matches, inputValue);
   }
 
   function resetPage() {
@@ -61,11 +61,19 @@
     return matches;
   }
 
-  function displayMatches(matches) {
+  function displayMatches(matches, inputValue) {
     ul.innerHTML = '';
     for (const match of matches) {
+      const regex = new RegExp(inputValue, 'gi');
+
+      const cityHL = match.city.replace(regex,
+      `<span class = "hl">${inputValue}</span>`);
+      
+      const stateHL = match.state.replace(regex,
+      `<span class = "hl">${inputValue}</span>`);
+
       const li = document.createElement('li');
-      li.innerHTML = `<span>${match.city}, ${match.state}</span>
+      li.innerHTML = `<span>${cityHL}, ${stateHL}</span>
       <span class="population">${match.population}</span>`;
       ul.appendChild(li);
     }
