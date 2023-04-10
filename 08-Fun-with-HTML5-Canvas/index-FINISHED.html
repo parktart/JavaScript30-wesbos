@@ -5,16 +5,92 @@
   <title>HTML5 Canvas</title>
   <link rel="icon" href="https://fav.farm/🔥" />
 </head>
+
 <body>
-<canvas id="draw" width="800" height="800"></canvas>
-<script>
-</script>
+  <div>
+    <button>RESET</button>
+  </div>
+  <canvas id="draw"></canvas>
 
-<style>
-  html, body {
-    margin: 0;
-  }
-</style>
+  <script>
+    const canvas = document.querySelector('#draw');
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+    
+    const context = canvas.getContext('2d');
+    context.lineJoin = 'round';
+    context.lineCap = 'round';
 
+    let isDrawing = false;
+    let lastX = 0;
+    let lastY = 0;
+    let hue = 0;
+    let lineW = 5;
+    let direction = true;
+
+    canvas.addEventListener('mousedown', (e) => {
+      isDrawing = true;
+      lastX = e.offsetX;
+      lastY = e.offsetY;
+    });
+    canvas.addEventListener('mouseup', () => isDrawing = false);
+    canvas.addEventListener('mouseout', () => isDrawing = false);
+    canvas.addEventListener('mousemove', draw);
+
+    function draw(e) {
+      if (!isDrawing) return;
+      context.strokeStyle = `hsl(${hue}, 100%, 50%)`;
+      context.lineWidth = lineW;
+      context.beginPath();
+      context.moveTo(lastX, lastY);
+      context.lineTo(e.offsetX, e.offsetY);
+      context.stroke();
+      // console.log(e);
+      lastX = e.offsetX;
+      lastY = e.offsetY;
+      hue++;
+      if (hue === 360) hue = 0;
+
+      if (direction === true) lineW = lineW + 0.2;
+      if (direction === false) lineW = lineW - 0.2;
+      
+      if (lineW > 30 || lineW < 5) {
+        direction = !direction;
+      }
+    }
+
+    const button = document.querySelector('button');
+    button.addEventListener('click', reset);
+    function reset() {
+      context.clearRect(0, 0, canvas.width, canvas.height);
+    }
+
+  </script>
+
+  <style>
+    html, body {
+      margin: 0;
+    }
+
+    div {
+      display: flex;
+      justify-content: center;
+    }
+
+    button {
+      margin-top: 10px;
+      padding: 5px 10px;
+      background-color: pink;
+      border: 2px solid magenta;
+      border-radius: 8px;
+      font-weight: bold;
+      color: magenta;
+    }
+
+    button:active {
+      opacity: 0.5;
+      transform: scale(1.1);
+    }
+  </style>
 </body>
 </html>
