@@ -10,7 +10,9 @@
   <p onClick="makeGreen()">×BREAK×DOWN×</p>
 
   <script>
-    const dogs = [{ name: 'Snickers', age: 2 }, { name: 'hugo', age: 8 }];
+    const dogs = [{ name: 'Snickers', age: 2 }, { name: 'Hugo', age: 8 }];
+    const p = document.querySelector('p');
+    let userLoggedIn = false;
 
     function makeGreen() {
       const p = document.querySelector('p');
@@ -19,28 +21,59 @@
     }
 
     // Regular
+    console.log('hi');
 
     // Interpolated
+    console.log('Hi I am a %s string', 'little');
 
     // Styled
+    console.log('Hi I am %cstyled', 'color: white; font-weight: bold;');
 
     // warning!
+    console.warn('This is a %cWARNING', 'color: yellow');
 
     // Error :|
+    console.error('This is a %cERROR', 'color: red');
 
     // Info
+    console.info('A something has happened');
 
     // Testing
+    console.assert(userLoggedIn === true, 'User is logged out');
 
     // clearing
+    // console.clear();
 
     // Viewing DOM Elements
+    console.dir(p);
+    
+    // table
+    console.table(dogs);
 
     // Grouping together
+    dogs.forEach(dog => {
+      console.groupCollapsed(`${dog.name}`);
+      console.log(`This is ${dog.name}`);
+      console.log(`${dog.name} is ${dog.age} years old`);
+      console.log(`${dog.name} is ${dog.age * 7} dog years old`);
+      console.groupEnd(`${dog.name}`);
+    });
 
     // counting
+    console.count('accumulator');
+    console.count('accumulator');
+    console.count('accumulator');
+    console.count('accumulator');
+    console.count('accumulator');
 
     // timing
+    console.time('fetch github data');
+    fetch('https://api.github.com/users/parktart')
+      .then(data => data.json())
+      .then(data => {
+        console.log(data);
+        console.timeEnd('fetch github data');
+      });
 
   </script>
 </body>
