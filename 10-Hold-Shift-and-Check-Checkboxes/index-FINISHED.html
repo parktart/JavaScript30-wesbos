@@ -97,6 +97,57 @@
   </div>
 
 <script>
+
+let shiftPressed = false;
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Shift') {shiftPressed = true};
+});
+document.addEventListener('keyup', (e) => {
+  if (e.key === 'Shift') {shiftPressed = false};
+});
+
+const checkboxes = Array.from(document.querySelectorAll('input[type="checkbox"]'));
+
+checkboxes.forEach(checkbox => {
+  checkbox.addEventListener('change', main);
+});
+
+let lastIndex = null;
+
+function main(e) {
+  if (lastIndex === null || checkboxes[lastIndex].checked === false) {
+    lastIndex = null;
+  };
+
+  const thisIndex = checkboxes.indexOf(e.target);
+
+  if (shiftPressed && e.target.checked && lastIndex !== null) {
+
+    if (thisIndex > lastIndex) {
+      for (let i = lastIndex + 1; i < thisIndex; i++) {
+        if (checkboxes[i].checked === false) {
+          checkboxes[i].checked = true;
+        }
+      }
+    }
+
+    if (thisIndex < lastIndex) {
+      for (let i = thisIndex + 1; i < lastIndex; i++) {
+        if (checkboxes[i].checked === false) {
+          checkboxes[i].checked = true;
+        }
+      }
+    }
+
+    lastIndex = checkboxes.indexOf(e.target);
+    return;
+  }
+
+  if (e.target.checked) {
+    lastIndex = checkboxes.indexOf(e.target);
+  }
+}
+
 </script>
 </body>
 </html>
