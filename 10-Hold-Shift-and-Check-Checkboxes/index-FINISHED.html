@@ -98,31 +98,27 @@
 
 <script>
 
-let shiftPressed = false;
-document.addEventListener('keydown', (e) => {
-  if (e.key === 'Shift') {shiftPressed = true};
-});
-document.addEventListener('keyup', (e) => {
-  if (e.key === 'Shift') {shiftPressed = false};
-});
+  const checkboxes = Array.from(document.querySelectorAll('.inbox input[type="checkbox"]'));
 
-const checkboxes = Array.from(document.querySelectorAll('input[type="checkbox"]'));
+  checkboxes.forEach(checkbox => {
+    checkbox.addEventListener('click', handleChange);
+  });
+  
+  let lastIndex = null;
 
-checkboxes.forEach(checkbox => {
-  checkbox.addEventListener('change', main);
-});
-
-let lastIndex = null;
-
-function main(e) {
-  if (lastIndex === null || checkboxes[lastIndex].checked === false) {
-    lastIndex = null;
-  };
-
-  const thisIndex = checkboxes.indexOf(e.target);
-
-  if (shiftPressed && e.target.checked && lastIndex !== null) {
-
+  function handleChange(e) {
+    if (e.target.checked === false) return;
+    if (lastIndex === null || checkboxes[lastIndex].checked === false) { // if lastIndex is unchecked
+      lastIndex = null;
+    };
+    const thisIndex = checkboxes.indexOf(e.target);
+    if (e.shiftKey && lastIndex !== null) {
+      handleShift(thisIndex);
+    }
+    lastIndex = thisIndex;
+  }
+  
+  function handleShift(thisIndex) {
     if (thisIndex > lastIndex) {
       for (let i = lastIndex + 1; i < thisIndex; i++) {
         if (checkboxes[i].checked === false) {
@@ -130,7 +126,6 @@ function main(e) {
         }
       }
     }
-
     if (thisIndex < lastIndex) {
       for (let i = thisIndex + 1; i < lastIndex; i++) {
         if (checkboxes[i].checked === false) {
@@ -138,15 +133,7 @@ function main(e) {
         }
       }
     }
-
-    lastIndex = checkboxes.indexOf(e.target);
-    return;
   }
-
-  if (e.target.checked) {
-    lastIndex = checkboxes.indexOf(e.target);
-  }
-}
 
 </script>
 </body>
