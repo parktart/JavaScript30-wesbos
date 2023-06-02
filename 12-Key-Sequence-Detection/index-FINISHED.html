@@ -7,6 +7,22 @@
     <link rel="icon" href="https://fav.farm/🔥" />
   </head>
   <body>
-    <script></script>
+    <script>
+      const pressed = [];
+      const secretCode = 'gif';
+      window.addEventListener('keyup', (e) => {
+        pressed.push(e.key.length == 1 ? e.key : 'x');
+        if (pressed.length > secretCode.length) {
+          pressed.shift();
+        };
+
+        let joined = pressed.join('');
+        console.log(joined);
+        if (joined.includes(secretCode)) {
+          console.log('CORNIFY');
+          cornify_add();
+        };
+      });
+    </script>
   </body>
 </html>
