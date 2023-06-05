@@ -44,7 +44,7 @@
   </div>
 
   <script>
-    function debounce(func, wait = 20, immediate = true) {
+    function debounce(func, wait = 10, immediate = true) {
       var timeout;
       return function() {
         var context = this, args = arguments;
@@ -59,14 +59,14 @@
       };
     }
 
-    let imgs = document.querySelectorAll('img');
+    const imgs = document.querySelectorAll('img');
 
     function checkElementVisibility() {
       imgs.forEach((img) => {
         if (isInViewport(img)) {
           img.classList.add('active');
         } else {
-          // img.classList.remove('active');
+          img.classList.remove('active');
         }
       });
     };
@@ -75,12 +75,12 @@
       const rect = element.getBoundingClientRect();
       return (
         rect.top >= 0 &&
-        rect.bottom <= (window.innerHeight || document.documentElement.clientHeight)
+        rect.bottom <= (window.innerHeight + (element.height / 2) || document.documentElement.clientHeight)
       );
     };
 
-    window.addEventListener('scroll', checkElementVisibility);
-    window.addEventListener('resize', checkElementVisibility);
+    window.addEventListener('scroll', debounce(checkElementVisibility));
+    window.addEventListener('resize', debounce(checkElementVisibility));
   </script>
 
   <style>
